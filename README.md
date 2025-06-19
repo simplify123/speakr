@@ -158,6 +158,11 @@ curl http://localhost:6001/v1/audio/transcriptions \
 curl http://localhost:8080/v1/audio/transcriptions -H "Content-Type: multipart/form-data" -F file="@$PWD/test.wav" -F model="whisper-medium"
 ```
 
+## final result
+If you follow all my steps correctly,you should see
+![SunnyCapturer2025-06-18_18-30-43.png](https://img.picui.cn/free/2025/06/19/6854038790256.png)
+![SunnyCapturer2025-06-19_20-32-18.png](https://img.picui.cn/free/2025/06/19/685403882035c.png)
+
 ## ✅ 依赖要求
 
 - Docker >= 20.10
