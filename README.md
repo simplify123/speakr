@@ -16,7 +16,7 @@
   * Bash script (`setup.sh`) for Linux/Systemd environments
   * Docker with automated builds via GitHub Actions
 
-
+## 在 LocalAI 的实现中，Whisper 转录功能是通过集成 whisper.cpp 来实现的，并不是直接使用 WhisperX 作为其引擎，所以不支持多个说话人分离。若需要该功能，则需要部署image: onerahmet/openai-whisper-asr-webservice:latest-gpu
 # 🎙️ Speakr + LocalAI Whisper 本地离线语音转写系统部署指南
 
 本项目集成了 [Speakr](https://github.com/murtaza-nasir/speakr) 和 [LocalAI](https://github.com/go-skynet/LocalAI)，实现了基于 Whisper 的本地离线音频转写功能，支持中文和英文录音的转写，并提供网页端界面。
