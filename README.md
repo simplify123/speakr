@@ -17,7 +17,7 @@
   * Docker with automated builds via GitHub Actions
 
 
-# 🎙️ Speakr + LocalAI Whisper 实时语音转写系统部署指南
+# 🎙️ Speakr + LocalAI Whisper 本地离线语音转写系统部署指南
 
 本项目集成了 [Speakr](https://github.com/murtaza-nasir/speakr) 和 [LocalAI](https://github.com/go-skynet/LocalAI)，实现了基于 Whisper 的本地离线音频转写功能，支持中文和英文录音的转写，并提供网页端界面。
 
