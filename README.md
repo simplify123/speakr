@@ -1,45 +1,8 @@
 # Speakr
 
-[![License: AGPL v3](https://img.shields.io/badge/License-AGPL_v3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0) [![Docker Build and Publish](https://github.com/murtaza-nasir/speakr/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/murtaza-nasir/speakr/actions/workflows/docker-publish.yml) 
-
-This project is dual-licensed. See the [License](#license) section for details.
-
-Speakr is a personal, self-hosted web application designed for transcribing audio recordings (like meetings), generating concise summaries and titles, and interacting with the content through a chat interface. Keep all your meeting notes and insights securely on your own server.
-
 ## Screenshots
-![image](static/img/speakr1.png)
-![image](static/img/speakr2.png)
-![image](static/img/speakr3.png)
-![image](static/img/speakr4.png)
-
-## Features
-
-**Core Functionality:**
-
-* **Audio Upload:** Upload audio files (MP3, WAV, M4A, etc.) via drag-and-drop or file selection.
-* **Background Processing:** Transcription and summarization happen in the background without blocking the UI.
-* **Multilingual Support:** User-configurable languages for both audio transcription (input) and AI-generated content like summaries and chat (output).
-* **Transcription:** Uses OpenAI-compatible Speech-to-Text (STT) APIs (configurable, e.g., self-hosted Whisper). Transcription language can be set per user.
-* **AI Summarization & Titling:** Generates concise titles and summaries using configurable LLMs via OpenAI-compatible APIs (like OpenRouter). Features an improved default summarization prompt, and users can provide their own custom prompt. Output language can be set per user.
-* **Interactive Chat:** Ask questions and interact with the transcription content using an AI model. Incorporates user's professional context (name, title, company if provided by the user) for more relevant responses. Chat output language can be set per user.
-* **Search, Inbox & Highlight:** For highlighting and easy processing
-* **Metadata Editing:** Edit titles, participants, meeting dates, summaries, and notes associated with recordings.
-
-**User Features:**
-
-* **Authentication:** Secure user registration and login system.
-* **Account Management:** Users can change their passwords and manage preferences on their Account page, including:
-    * Setting transcription and output languages.
-    * Defining a custom summarization prompt.
-    * Adding personal/professional information (name, title, company) to enhance chat context and AI interactions.
-* **Recording Gallery:** View, manage, and access all personal recordings.
-* **Dark Mode:** Switch between light and dark themes.
-
-**Admin Features:**
-
-* **Admin Dashboard:** Central place for administration tasks (`/admin`).
-* **User Management:** Add, edit, delete users, and grant/revoke admin privileges.
-* **System Statistics:** View overall usage statistics (total users, recordings, storage, etc.).
+![image](https://raw.githubusercontent.com/murtaza-nasir/speakr/master/static/img/hero-shot.png)
+![image](https://raw.githubusercontent.com/murtaza-nasir/speakr/master/static/img/multilingual-support.png)
 
 ## Technology Stack
 
