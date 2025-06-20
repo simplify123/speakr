@@ -169,6 +169,76 @@ If you follow all my steps correctly,you should see
 - 若使用 GPU：NVIDIA Container Toolkit
 - 若使用 CPU：镜像改为 `localai/localai:latest-aio-cpu`
 
+## 另一个版本：支持人物角色分离，对于中文，推荐使用large-v3模型，准确率更高
+```yml
+services:
+  whisper-asr-webservice6002:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    container_name: whisper-asr-webservice6002
+    ports:
+      - "6002:9000"
+    volumes:
+      - ./huggingface/hub:/root/.cache/huggingface/hub
+    environment:
+      - ASR_MODEL=large-v3  # 可选 large-v3、medium、distil-large-v3
+      - ASR_COMPUTE_TYPE=int8
+      - ASR_ENGINE=whisperx
+      - HF_TOKEN=hf_your_huggingface_token_here
+      - HF_ENDPOINT=https://hf-mirror.com   # https://hf-mirror.com
+      - HF_HOME=/root/.cache/huggingface/
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+    restart: unless-stopped
+    networks:
+      - speakr-network
+
+  app:
+    image: learnedmachine/speakr:latest
+    container_name: speakr8890
+    restart: unless-stopped
+    ports:
+      - "8890:8899"
+    environment:
+      - TEXT_MODEL_BASE_URL=http://100.64.0.16:11434/v1
+      - TEXT_MODEL_API_KEY=111111
+      - TEXT_MODEL_NAME=qwen2.5:14b
+      - USE_ASR_ENDPOINT=true
+
+      - ASR_BASE_URL=http://100.64.0.16:6002
+      - ASR_ENCODE=true
+      - ASR_TASK=transcribe
+      - ASR_DIARIZE=true
+      - ASR_MIN_SPEAKERS=1
+      - ASR_MAX_SPEAKERS=5
+
+      - ALLOW_REGISTRATION=false
+      - SUMMARY_MAX_TOKENS=8000
+      - CHAT_MAX_TOKENS=5000
+      - ADMIN_USERNAME=admin
+      - ADMIN_EMAIL=admin@alt.org
+      - ADMIN_PASSWORD=11111111
+
+      - SQLALCHEMY_DATABASE_URI=sqlite:////data/instance/transcriptions.db
+      - UPLOAD_FOLDER=/data/uploads
+
+      # 以下三个变量用于提高默认的上传附件大小
+      - MAX_CONTENT_LENGTH=2048 # 2048MB
+      - UPLOAD_LIMIT=2147483648 # 字节
+      - MAX_UPLOAD_SIZE=2147483648
+    volumes:
+      - ./uploads:/data/uploads
+      - ./instance:/data/instance
+    depends_on:
+      - whisper-asr-webservice6002
+    networks:
+      - speakr-network
+
+networks:
+  speakr-network:
+    driver: bridge
+
 ## 🙌 鸣谢
 
 - [Speakr](https://github.com/murtaza-nasir/speakr)
