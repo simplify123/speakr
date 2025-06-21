@@ -40,7 +40,6 @@
 
 修改 `models/whisper/model.yaml` 为：
 
-
 name: whisper-medium
 backend: whisper
 parameters:
@@ -170,6 +169,51 @@ If you follow all my steps correctly,you should see
 - 若使用 CPU：镜像改为 `localai/localai:latest-aio-cpu`
 
 ## 另一个版本：支持人物角色分离，对于中文，推荐使用large-v3模型，准确率更高
+
+## 📦 项目结构
+
+├─speakr_whisperx
+│  ├─huggingface
+│  │  └─hub
+│  │      ├─models--jonatasgrosman--wav2vec2-large-xlsr-53-chinese-zh-cn
+│  │      │  ├─.no_exist
+│  │      │  │  └─99ccb2737be22b8bb50dcfcc39ad4d567fb90cfd
+│  │      │  ├─blobs
+│  │      │  ├─refs
+│  │      │  └─snapshots
+│  │      │      └─99ccb2737be22b8bb50dcfcc39ad4d567fb90cfd
+│  │      │          └─.cache
+│  │      │              └─huggingface
+│  │      │                  └─download
+│  │      ├─models--pyannote--segmentation-3.0
+│  │      │  └─.cache
+│  │      │      └─huggingface
+│  │      │          └─download
+│  │      ├─models--pyannote--speaker-diarization-3.1
+│  │      │  ├─.cache
+│  │      │  │  └─huggingface
+│  │      │  │      └─download
+│  │      │  │          ├─.github
+│  │      │  │          │  └─workflows
+│  │      │  │          └─reproducible_research
+│  │      │  ├─.github
+│  │      │  │  └─workflows
+│  │      │  └─reproducible_research
+│  │      ├─models--Systran--faster-whisper-large-v3
+│  │      │  ├─blobs
+│  │      │  ├─refs
+│  │      │  └─snapshots
+│  │      │      └─edaa852ec7e145841d8ffdb056a99866b5f0a478
+│  │      └─models--Systran--faster-whisper-medium
+│  │          ├─blobs
+│  │          ├─refs
+│  │          └─snapshots
+│  │              └─08e178d48790749d25932bbc082711ddcfdfbc4f
+│  ├─instance
+│  ├─models
+│  └─uploads
+│  └─docker-compose.yml
+
 ```yml
 services:
   whisper-asr-webservice6002:
@@ -180,7 +224,7 @@ services:
     volumes:
       - ./huggingface/hub:/root/.cache/huggingface/hub
     environment:
-      - ASR_MODEL=large-v3  # 可选 large-v3、medium、distil-large-v3
+      - ASR_MODEL=large-v3  # 可选 large-v3、medium、distil-large-v3(不支持中文)
       - ASR_COMPUTE_TYPE=int8
       - ASR_ENGINE=whisperx
       - HF_TOKEN=hf_your_huggingface_token_here
@@ -238,6 +282,49 @@ services:
 networks:
   speakr-network:
     driver: bridge
+```
+### 模型下载代码
+```
+# 设置镜像环境变量（Windows PowerShell）
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+
+# 在本地电脑上直接使用 huggingface-cli 下载
+huggingface-cli download --resume-download jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn --local-dir D:/models/models--jonatasgrosman--wav2vec2-large-xlsr-53-chinese-zh-cn
+
+# https://hf-mirror.com/jonatasgrosman/wav2vec2-large-xlsr-53-chinese-zh-cn/tree/main
+
+
+# 设置镜像环境变量（Windows PowerShell）
+$env:HF_ENDPOINT = "https://hf-mirror.com"
+
+huggingface-cli download --resume-download openai/whisper-medium --local-dir D:/models/models--openai--whisper-medium
+
+# https://hf-mirror.com/openai/whisper-medium/tree/main
+
+
+https://hf-mirror.com/Systran/faster-whisper-medium
+https://hf-mirror.com/Systran/faster-whisper-medium/commit/08e178d48790749d25932bbc082711ddcfdfbc4f
+
+ref/main里面就是 08e178d48790749d25932bbc082711ddcfdfbc4f
+
+
+huggingface-cli download --resume-download Systran/faster-whisper-medium --local-dir D:/models/models--Systran-faster-whisper-medium
+
+huggingface-cli download --resume-download pyannote/speaker-diarization-3.1 --local-dir D:/models/models--pyannote-speaker-diarization-3.1
+
+huggingface-cli download --resume-download pyannote/segmentation-3.0 --local-dir D:/models/models--pyannote-segmentation-3.0
+
+
+以下两个模型需要先在huggingface官网注册账号并获取token后才能下载，并且在huggingface模型主页的model card里填写名称和网站信息
+https://huggingface.co/pyannote/speaker-diarization-3.1
+https://huggingface.co/pyannote/segmentation-3.0
+
+https://hf-mirror.com/pyannote/speaker-diarization-3.1
+https://hf-mirror.com/pyannote/segmentation-3.0
+
+huggingface-cli download --token hf_your_huggingface_token_here --resume-download pyannote/speaker-diarization-3.1 --local-dir D:/models/models--pyannote-speaker-diarization-3.1
+
+huggingface-cli download --token hf_your_huggingface_token_here --resume-download pyannote/segmentation-3.0 --local-dir D:/models/models--pyannote-segmentation-3.0
 ```
 
 ### 如果你按照我的代码正确完成了部署，应当可以看到以下结果
