@@ -168,7 +168,7 @@ If you follow all my steps correctly,you should see
 - 若使用 GPU：NVIDIA Container Toolkit
 - 若使用 CPU：镜像改为 `localai/localai:latest-aio-cpu`
 
-## 另一个版本：支持人物角色分离，对于中文，推荐使用large-v3模型，准确率更高
+## 🚀  另一个版本：支持人物角色分离，对于中文，推荐使用large-v3模型，准确率更高
 
 ## 📦 项目结构
 
